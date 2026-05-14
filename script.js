@@ -208,10 +208,10 @@ function togglePainel() {
 // Nova função para o botão de processar
 function calcularRotaMobile() {
     // 1. Chama sua função original de cálculo
-    calcularRota(); 
+    var sucess = calcularRota() == undefined ? true : false; 
     
     // 2. Contrai o menu se estiver em mobile
-    if (window.innerWidth <= 900) {
+    if (window.innerWidth <= 900 && sucess) {
         document.getElementById('painel-principal').classList.remove('expandido');
     }
 }
@@ -503,12 +503,12 @@ function calcularRota() {
 
     if (!inicio || !fim) {
         divResultado.innerHTML = "<b style='color:#dc2626;'>Erro:</b> Selecione pais, estado e cidade na origem e no destino.";
-        return;
+        return false;
     }
 
     if (inicio === fim) {
         divResultado.innerHTML = "<b>Aviso:</b> Origem e destino sao o mesmo local.";
-        return;
+        return false;
     }
 
     const distancias = {};
@@ -550,7 +550,7 @@ function calcularRota() {
 
     if (caminho[0] !== inicio) {
         divResultado.innerHTML = "<b style='color:#dc2626;'>Erro:</b> Nao foi possivel encontrar uma rota valida.";
-        return;
+        return false;
     }
 
     caminhoGlobal = caminho;
@@ -854,7 +854,7 @@ function carregarRotaHistorico(index) {
     atualizarCidades("Destino");
     document.getElementById("cidadeDestino").value = rota.destinoChave;
 
-    calcularRota();
+    calcularRotaMobile();
 }
 
 function limparHistorico() {
