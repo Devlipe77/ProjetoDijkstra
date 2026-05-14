@@ -257,8 +257,6 @@ select:disabled { background-color: var(--disabled-bg); cursor: not-allowed; col
 }
 .trecho-km-zero { color: var(--text-muted); font-weight: 500; }
 
-
-
 @media (max-width: 900px) {
     /* Ajuste das Estatísticas (Escondido por padrão) */
     .painel-estatisticas {
@@ -273,19 +271,25 @@ select:disabled { background-color: var(--disabled-bg); cursor: not-allowed; col
 
     /* Painel de Rotas como Bottom Sheet */
     .painel {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        width: 100%;
-        margin: 0;
+        position: absolute !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        margin: 0 !important; /* Força a remoção de qualquer margem */
+        box-sizing: border-box; /* Impede que o padding aumente a largura total */
+        
+        /* Arredonda apenas em cima, deixando a base reta encostada na tela */
+        border-radius: 24px 24px 0 0;
+        
+        /* Preenchimento com segurança para a barra de navegação nativa do celular (iOS/Android) */
+        padding: 24px 20px calc(20px + env(safe-area-inset-bottom));
+        
         z-index: 1000;
         transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        transform: translateY(calc(100% - 70px)); /* Deixa apenas o header visível */
+        transform: translateY(calc(100% - 70px));
         max-height: 70dvh;
-        border-radius: 24px 24px 0 0;
     }
-    
+
     /* Botão flutuante i+ */
     .fab-info {
         position: absolute;    
