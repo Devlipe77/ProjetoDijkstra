@@ -185,8 +185,19 @@ async function carregarProjeto() {
 
 function toggleStats() {
     const stats = document.getElementById('painel-stats');
+    const painelPrincipal = document.getElementById('painel-principal');
+    
     const isHidden = stats.style.display === 'none' || stats.style.display === '';
-    stats.style.display = isHidden ? 'flex' : 'none';
+    
+    if (isHidden) {
+        stats.style.display = 'flex';
+        // Opcional: Contrai o menu de rotas para dar foco às estatísticas
+        if (window.innerWidth <= 900) {
+            painelPrincipal.classList.remove('expandido');
+        }
+    } else {
+        stats.style.display = 'none';
+    }
 }
 
 function togglePainel() {

@@ -258,69 +258,54 @@ select:disabled { background-color: var(--disabled-bg); cursor: not-allowed; col
 .trecho-km-zero { color: var(--text-muted); font-weight: 500; }
 
 @media (max-width: 900px) {
-    /* Ajuste das Estatísticas (Escondido por padrão) */
-    .painel-estatisticas {
-        display: none; /* JS controla a exibição */
-        position: absolute;
-        top: 80px;
-        width: 90%;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 1050;
+    /* 1. Mover o Zoom do Leaflet para não conflitar com o seu botão i+ */
+    .leaflet-top.leaflet-left {
+        top: 80px !important; /* Empurra o +/- do mapa para baixo */
     }
 
-    /* Painel de Rotas como Bottom Sheet */
-    .painel {
-        position: absolute !important;
-        bottom: 0 !important;
-        left: 0 !important;
-        width: 100% !important;
-        margin: 0 !important; /* Força a remoção de qualquer margem */
-        box-sizing: border-box; /* Impede que o padding aumente a largura total */
-        
-        /* Arredonda apenas em cima, deixando a base reta encostada na tela */
-        border-radius: 24px 24px 0 0;
-        
-        /* Preenchimento com segurança para a barra de navegação nativa do celular (iOS/Android) */
-        padding: 24px 20px calc(20px + env(safe-area-inset-bottom));
-        
-        z-index: 1000;
-        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        transform: translateY(calc(100% - 70px));
-        max-height: 70dvh;
-    }
-
-    /* Botão flutuante i+ */
+    /* 2. Ajuste do Botão i+ (Sempre no topo de tudo) */
     .fab-info {
-        position: absolute;    
+        position: absolute;
         top: 20px;
         left: 20px;
-        z-index: 1100;
-        width: 45px;
-        height: 45px;
-        border-radius: 50%;
+        z-index: 2000; /* Valor bem alto para ficar acima de tudo */
+        width: 48px;
+        height: 48px;
         background: var(--primary);
         color: white;
+        border-radius: 50%;
         border: none;
-        font-weight: bold;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         font-size: 1.2rem;
-        box-shadow: var(--shadow);
-        cursor: pointer;
+        font-weight: bold;
     }
 
-    /* Alça "---" acima do header */
-    .drawer-handle {
-        display: flex;
-        align-items: center;
-        width: 40px;
-        height: 5px;
-        background: #d1d5db;
-        border-radius: 10px;
-        margin: -10px auto 15px auto;
-        cursor: pointer;
+    /* 3. Painel de Estatísticas (Modal suspenso) */
+    .painel-estatisticas {
+        display: none; 
+        position: absolute;
+        top: 85px; /* Começa abaixo do botão i+ */
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90%;
+        max-width: 350px;
+        background: rgba(17, 24, 39, 0.95); /* Mais opaco para leitura melhor */
+        z-index: 1500; /* Abaixo do i+, mas acima do menu inferior */
+        padding: 15px;
+        border-radius: 16px;
+        flex-direction: column;
     }
 
-    .painel.expandido {
-        transform: translateY(0);
+    /* Tornar o grid de estatísticas mais "magro" para não esticar muito verticalmente */
+    .stats-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    /* 4. Menu Inferior (Bottom Sheet) */
+    .painel {
+        z-index: 1000; /* Camada base */
+        /* ... manter as outras configurações de transform e border-radius ... */
     }
 }
