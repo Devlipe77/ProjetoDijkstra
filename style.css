@@ -16,11 +16,28 @@ body { margin: 0; padding: 0; font-family: 'Inter', system-ui, sans-serif; backg
 .painel {
     position: absolute; top: 24px; right: 24px; z-index: 1000;
     background: var(--bg-panel); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-    padding: 24px; border-radius: var(--radius); box-shadow: var(--shadow); 
+    border-radius: var(--radius); box-shadow: var(--shadow); 
     width: 340px; border: 1px solid rgba(255, 255, 255, 0.5); box-sizing: border-box;
     max-height: calc(100vh - 48px);
     display: flex;
     flex-direction: column;
+}
+
+/* Estilo da Área Rolável */
+.painel-conteudo {
+    padding: 16px 20px 40px 20px;
+    overflow-y: auto ; /* Rolagem apenas aqui */
+    flex: 1; /* Ocupa todo o espaço disponível abaixo do header */
+    -webkit-overflow-scrolling: touch; /* Melhora a rolagem no iOS */
+}
+
+/* Estilo do Header Fixo */
+.painel-header {
+    padding: 25px 15px 0px 15px !important;
+    background: var(--bg-panel); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-color);
+    flex-shrink: 0; /* Impede que o header suma ao rolar */
+    border-radius: 12px 12px 0px 0px;
 }
 
 #controles-fixos {
@@ -46,6 +63,8 @@ body { margin: 0; padding: 0; font-family: 'Inter', system-ui, sans-serif; backg
     align-items: center; 
     gap: 24px;
 }
+
+
 
 .stats-titulo { 
     font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; 
