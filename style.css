@@ -257,74 +257,62 @@ select:disabled { background-color: var(--disabled-bg); cursor: not-allowed; col
 }
 .trecho-km-zero { color: var(--text-muted); font-weight: 500; }
 
+/* Botão flutuante i+ */
+.fab-info {
+    position: absolute;    
+    top: 20px;
+    left: 20px;
+    z-index: 1100;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: white;
+    border: none;
+    font-weight: bold;
+    font-size: 1.2rem;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+}
+
 @media (max-width: 900px) {
-    body {
-        overflow: hidden;
-        overscroll-behavior-y: none; /* Evita o efeito "elástico" indesejado ao rolar */
+    /* Ajuste das Estatísticas (Escondido por padrão) */
+    .painel-estatisticas {
+        display: none; /* JS controla a exibição */
+        position: absolute;
+        top: 80px;
+        width: 90%;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1050;
     }
 
-    #map {
-        height: 100dvh; /* dvh se adapta dinamicamente à barra de endereços do celular */
-        width: 100vw;
-    }
-
-    /* Painel de Controles na Base (Bottom Sheet) */
+    /* Painel de Rotas como Bottom Sheet */
     .painel {
         position: absolute;
-        top: auto;
         bottom: 0;
         left: 0;
         right: 0;
         width: 100%;
-        max-height: 50dvh; 
         margin: 0;
-        padding: 24px 20px;
+        z-index: 1000;
+        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        transform: translateY(calc(100% - 70px)); /* Deixa apenas o header visível */
+        max-height: 70dvh;
         border-radius: 24px 24px 0 0;
-        border: none;
-        border-top: 1px solid rgba(255, 255, 255, 0.8);
-        box-shadow: 0 -8px 25px rgba(0, 0, 0, 0.15);
-        overflow-y: auto;
-        z-index: 1000;
     }
 
-    /* Move o painel de estatísticas para o TOPO da tela */
-    .painel-estatisticas {
-        position: absolute;
-        top: 16px; 
-        bottom: auto;
-        left: 50%;
-        transform: translateX(-50%);
-        width: calc(100% - 32px);
-        margin: 0;
-        padding: 16px;
-        border-radius: 16px;
-        flex-direction: column;
-        gap: 12px;
-        z-index: 1000;
-        box-sizing: border-box;
+    .painel.expandido {
+        transform: translateY(0);
     }
 
-    .stats-titulo {
-        width: 100%;
-        text-align: center;
-        border-right: none;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-        padding-right: 0;
-        padding-bottom: 10px;
-        margin-bottom: 4px;
-    }
-
-    .stats-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr; /* Quebra as 4 métricas em um grid 2x2 */
-        gap: 16px;
-        width: 100%;
-        justify-items: center;
-    }
-
-    .stats-item {
-        flex-direction: column;
-        align-items: center;
-        gap: 4px;
+    /* Alça "---" acima do header */
+    .drawer-handle {
+        width: 40px;
+        height: 5px;
+        background: #d1d5db;
+        border-radius: 10px;
+        margin: -10px auto 15px auto;
+        cursor: pointer;
     }
 }

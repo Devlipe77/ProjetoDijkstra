@@ -183,6 +183,28 @@ async function carregarProjeto() {
     }
 }
 
+function toggleStats() {
+    const stats = document.getElementById('painel-stats');
+    const isHidden = stats.style.display === 'none' || stats.style.display === '';
+    stats.style.display = isHidden ? 'flex' : 'none';
+}
+
+function togglePainel() {
+    const painel = document.getElementById('painel-principal');
+    painel.classList.toggle('expandido');
+}
+
+// Nova função para o botão de processar
+function calcularRotaMobile() {
+    // 1. Chama sua função original de cálculo
+    calcularRota(); 
+    
+    // 2. Contrai o menu se estiver em mobile
+    if (window.innerWidth <= 900) {
+        document.getElementById('painel-principal').classList.remove('expandido');
+    }
+}
+
 function inicializarMapa() {
     const limitesAmericaDoSul = [
         [15, -92],
