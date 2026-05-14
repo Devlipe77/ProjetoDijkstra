@@ -155,7 +155,7 @@ async function salvarRelatorioConsulta(inicio, fim, distanciaTotal) {
 
 async function carregarProjeto() {
     try {
-        const resposta = await fetch("../model/cidades.json");
+        const resposta = await fetch("cidades.json");
         if (!resposta.ok) throw new Error("Nao foi possivel carregar o arquivo JSON.");
 
         cidadesPorLocal = await resposta.json();
