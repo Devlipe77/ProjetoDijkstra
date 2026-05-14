@@ -259,26 +259,52 @@ select:disabled { background-color: var(--disabled-bg); cursor: not-allowed; col
 
 @media (max-width: 900px) {
     body {
-        overflow: auto;
+        overflow: hidden; /* Evita que a página inteira role, mantendo aspecto de aplicativo */
     }
 
     #map {
-        height: 60vh;
+        height: 100vh;
+        width: 100vw;
     }
 
     .painel {
-        position: static;
-        width: auto;
-        max-height: none;
-        margin: 16px;
+        position: absolute;
+        top: auto;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        max-height: 55vh; /* Ocupa até 55% da tela, deixando o mapa visível acima */
+        margin: 0;
+        padding: 20px 16px;
+        border-radius: 24px 24px 0 0; /* Arredonda apenas os cantos superiores */
+        border: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.8);
+        box-shadow: 0 -8px 25px rgba(0, 0, 0, 0.15);
+        overflow-y: auto; /* Permite rolar os controles internamente */
     }
 
     .painel-estatisticas {
-        position: static;
-        transform: none;
-        margin: 0 16px 16px;
-        border-radius: 20px;
-        flex-wrap: wrap;
+        position: absolute;
+        bottom: calc(55vh + 16px); /* Flutua logo acima do painel de controles */
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90%;
+        margin: 0;
+        padding: 12px 16px;
+        border-radius: 16px;
+        flex-wrap: wrap; /* Permite que os itens quebrem linha se necessário */
         justify-content: center;
+        gap: 16px;
+    }
+
+    .stats-titulo {
+        width: 100%;
+        text-align: center;
+        border-right: none;
+        border-bottom: 1px solid rgba(255,255,255,0.2);
+        padding-right: 0;
+        padding-bottom: 8px;
+        margin-bottom: 4px;
     }
 }
