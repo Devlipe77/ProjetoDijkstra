@@ -257,35 +257,7 @@ select:disabled { background-color: var(--disabled-bg); cursor: not-allowed; col
 }
 .trecho-km-zero { color: var(--text-muted); font-weight: 500; }
 
-/* Botão flutuante i+ */
-.fab-info {
-    position: absolute;    
-    top: 20px;
-    left: 20px;
-    z-index: 1100;
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    background: var(--primary);
-    color: white;
-    border: none;
-    font-weight: bold;
-    font-size: 1.2rem;
-    box-shadow: var(--shadow);
-    cursor: pointer;
-}
 
-/* Alça "---" acima do header */
-.drawer-handle {
-    display: flex;
-    align-items: center;
-    width: 40px;
-    height: 5px;
-    background: #d1d5db;
-    border-radius: 10px;
-    margin: -10px auto 15px auto;
-    cursor: pointer;
-}
 
 @media (max-width: 900px) {
     /* Ajuste das Estatísticas (Escondido por padrão) */
@@ -312,6 +284,36 @@ select:disabled { background-color: var(--disabled-bg); cursor: not-allowed; col
         transform: translateY(calc(100% - 70px)); /* Deixa apenas o header visível */
         max-height: 70dvh;
         border-radius: 24px 24px 0 0;
+    }
+    
+    /* Botão flutuante i+ */
+    .fab-info {
+        position: absolute;    
+        top: 20px;
+        left: 20px;
+        z-index: 1100;
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        background: var(--primary);
+        color: white;
+        border: none;
+        font-weight: bold;
+        font-size: 1.2rem;
+        box-shadow: var(--shadow);
+        cursor: pointer;
+    }
+
+    /* Alça "---" acima do header */
+    .drawer-handle {
+        display: flex;
+        align-items: center;
+        width: 40px;
+        height: 5px;
+        background: #d1d5db;
+        border-radius: 10px;
+        margin: -10px auto 15px auto;
+        cursor: pointer;
     }
 
     .painel.expandido {
