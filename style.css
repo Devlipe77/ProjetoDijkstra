@@ -275,6 +275,18 @@ select:disabled { background-color: var(--disabled-bg); cursor: not-allowed; col
     cursor: pointer;
 }
 
+/* Alça "---" acima do header */
+.drawer-handle {
+    display: flex;
+    align-items: center;
+    width: 40px;
+    height: 5px;
+    background: #d1d5db;
+    border-radius: 10px;
+    margin: -10px auto 15px auto;
+    cursor: pointer;
+}
+
 @media (max-width: 900px) {
     /* Ajuste das Estatísticas (Escondido por padrão) */
     .painel-estatisticas {
@@ -304,15 +316,5 @@ select:disabled { background-color: var(--disabled-bg); cursor: not-allowed; col
 
     .painel.expandido {
         transform: translateY(0);
-    }
-
-    /* Alça "---" acima do header */
-    .drawer-handle {
-        width: 40px;
-        height: 5px;
-        background: #d1d5db;
-        border-radius: 10px;
-        margin: -10px auto 15px auto;
-        cursor: pointer;
     }
 }
