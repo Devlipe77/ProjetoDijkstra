@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="route.png">
+    <title>Rotas - Algoritmo de Dijkstra</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="painel">
+        <h3>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+            </svg>
+            Calculo de Rotas
+        </h3>
+
+        <label>Ponto de Origem</label>
+        <div class="grupo-selecao">
+            <select id="paisOrigem" onchange="atualizarEstados('Origem')">
+                <option value="">Pais...</option>
+            </select>
+            <select id="estadoOrigem" onchange="atualizarCidades('Origem')" disabled>
+                <option value="">Estado...</option>
+            </select>
+            <select id="cidadeOrigem" disabled>
+                <option value="">Cidade...</option>
+            </select>
+        </div>
+
+        <label>Ponto de Destino</label>
+        <div class="grupo-selecao">
+            <select id="paisDestino" onchange="atualizarEstados('Destino')">
+                <option value="">Pais...</option>
+            </select>
+            <select id="estadoDestino" onchange="atualizarCidades('Destino')" disabled>
+                <option value="">Estado...</option>
+            </select>
+            <select id="cidadeDestino" disabled>
+                <option value="">Cidade...</option>
+            </select>
+        </div>
+
+        <button class="btn-principal" onclick="calcularRota()">Processar Menor Rota</button>
+        <div id="resultado"></div>
+        <button class="btn-principal" id="btn-salvar-relatorio" onclick="salvarRelatorioAtual()" style="display:none; margin-top:10px; background-color:#0f766e;">Salvar Relatorio</button>
+
+        <div id="controles-fixos" style="display:none;">
+            <div class="controles-passos">
+                <button class="btn-nav" id="btn-prev" onclick="navegarPasso(-1)">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                    Voltar
+                </button>
+                <span class="passo-info" id="passo-info-fixo">Ponto 1 de 1</span>
+                <button class="btn-nav" id="btn-next" onclick="navegarPasso(1)">
+                    Avancar
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </button>
+            </div>
+            <button onclick="visaoGeral()" style="width:100%; margin-top:8px; background:none; border:none; color:var(--primary); font-size:0.8rem; cursor:pointer; text-decoration:underline;">Ver rota completa no mapa</button>
+        </div>
+
+        <div id="historico-secao" style="display:none;">
+            <div class="historico-header">
+                <span class="historico-titulo">Recentes</span>
+                <button class="historico-limpar" onclick="limparHistorico()">Limpar</button>
+            </div>
+            <div id="historico-lista"></div>
+        </div>
+    </div>
+
+    <div class="painel-estatisticas" id="painel-stats" style="display:none;">
+        <div class="stats-titulo">Rede Logica</div>
+        <div class="stats-grid">
+            <div class="stats-item">
+                <span class="stats-valor" id="stat-vertices">0</span>
+                <span class="stats-label">VERTICES</span>
+            </div>
+            <div class="stats-item">
+                <span class="stats-valor" id="stat-arestas">0</span>
+                <span class="stats-label">ARESTAS</span>
+            </div>
+            <div class="stats-item">
+                <span class="stats-valor" id="stat-grau-max">0</span>
+                <span class="stats-label">GRAU MAX.</span>
+            </div>
+            <div class="stats-item">
+                <span class="stats-valor" id="stat-grau-med">0</span>
+                <span class="stats-label">GRAU MED.</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="../script.js"></script>
+</body>
+</html>

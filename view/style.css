@@ -1,0 +1,284 @@
+:root {
+    --primary: #2563eb;
+    --primary-hover: #1d4ed8;
+    --bg-panel: rgba(255, 255, 255, 0.65);
+    --text-main: #111827;
+    --text-muted: #4b5563;
+    --border-color: #d1d5db;
+    --disabled-bg: #f3f4f6;
+    --radius: 12px;
+    --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+body { margin: 0; padding: 0; font-family: 'Inter', system-ui, sans-serif; background-color: #e5e7eb; overflow: hidden; }
+#map { width: 100vw; height: 100vh; z-index: 1; }
+
+.painel {
+    position: absolute; top: 24px; right: 24px; z-index: 1000;
+    background: var(--bg-panel); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    padding: 24px; border-radius: var(--radius); box-shadow: var(--shadow); 
+    width: 340px; border: 1px solid rgba(255, 255, 255, 0.5); box-sizing: border-box;
+    max-height: calc(100vh - 48px);
+    display: flex;
+    flex-direction: column;
+}
+
+#controles-fixos {
+    padding-top: 12px;
+    border-top: 1px dashed var(--border-color);
+    flex-shrink: 0; 
+}
+
+.painel-estatisticas {
+    position: absolute; 
+    bottom: 24px; 
+    left: 50%; 
+    transform: translateX(-50%);
+    z-index: 1000;
+    background: rgba(17, 24, 39, 0.85); 
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    padding: 12px 32px; 
+    border-radius: 40px; 
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3); 
+    border: 1px solid rgba(255, 255, 255, 0.1); 
+    color: white;
+    display: flex; 
+    align-items: center; 
+    gap: 24px;
+}
+
+.stats-titulo { 
+    font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; 
+    color: #9ca3af; font-weight: 700;
+    padding-right: 20px; border-right: 1px solid rgba(255,255,255,0.2);
+}
+
+.stats-grid { display: flex; gap: 32px; align-items: center; }
+
+.stats-item { display: flex; align-items: baseline; gap: 8px; }
+
+.stats-valor { font-size: 1.25rem; font-weight: 700; color: #60a5fa; }
+
+.stats-label { font-size: 0.75rem; color: #d1d5db; letter-spacing: 0.5px; }
+
+h3 { margin: 0 0 20px 0; color: var(--text-main); font-size: 1.25rem; font-weight: 700; display: flex; align-items: center; gap: 8px;}
+label { display: block; font-size: 0.875rem; font-weight: 600; color: var(--text-main); margin-bottom: 6px;}
+.grupo-selecao {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+select { 
+    width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--border-color); 
+    background-color: #fff; font-family: inherit; font-size: 0.875rem; color: var(--text-main);
+    outline: none; transition: all 0.2s ease; appearance: none;
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%236B7280%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+    background-repeat: no-repeat; background-position: right 12px top 50%; background-size: 10px auto;
+}
+select:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2); }
+select:disabled { background-color: var(--disabled-bg); cursor: not-allowed; color: #9ca3af;}
+
+.btn-principal { 
+    width: 100%; padding: 12px; margin-top: 8px; border-radius: 8px; border: none;
+    background-color: var(--primary); color: white; font-size: 0.95rem; font-weight: 600; 
+    cursor: pointer; transition: all 0.2s ease; box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.3);
+}
+.btn-principal:hover { background-color: var(--primary-hover); transform: translateY(-1px);}
+
+#resultado { margin-top: 20px; font-size: 0.875rem; color: var(--text-muted); line-height: 1.6; padding-top: 16px; border-top: 1px solid var(--border-color); display: none;
+    overflow-y: auto;
+    flex-shrink: 1;
+}
+
+#resultado.ativo { display: block; animation: fadeIn 0.4s ease forwards; }
+
+.badge-km { display: inline-block; background-color: #eff6ff; color: var(--primary); padding: 4px 10px; border-radius: 20px; font-weight: 700; font-size: 0.85rem; margin-bottom: 8px;}
+.caminho-texto { color: var(--text-main); font-weight: 500; }
+.cidade-ativa { color: var(--primary); font-weight: 800; background: #dbeafe; padding: 2px 6px; border-radius: 4px;}
+
+.controles-passos {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 16px; padding-top: 16px; border-top: 1px dashed var(--border-color);
+}
+.btn-nav {
+    padding: 8px 12px; background: #fff; color: var(--text-main); border: 1px solid var(--border-color);
+    border-radius: 6px; cursor: pointer; display: flex; align-items: center; gap: 4px; font-weight: 600; font-size: 0.8rem;
+}
+.btn-nav:hover:not(:disabled) { background: #f3f4f6; }
+.btn-nav:disabled { opacity: 0.4; cursor: not-allowed; }
+.passo-info { font-size: 0.8rem; font-weight: 700; color: var(--text-muted); }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+.rota-animada { stroke-dasharray: 2000; stroke-dashoffset: 2000; animation: desenharRota 4.5s ease-out forwards; }
+@keyframes desenharRota { to { stroke-dashoffset: 0; } }
+
+#historico-secao {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-color);
+}
+
+.historico-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.historico-titulo {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+}
+
+.historico-limpar {
+    background: none;
+    border: none;
+    font-size: 0.75rem;
+    color: #dc2626;
+    cursor: pointer;
+    padding: 0;
+}
+
+.historico-limpar:hover { text-decoration: underline; }
+
+.historico-item {
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    margin-bottom: 6px;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.historico-item:hover { background: #f3f4f6; }
+
+.historico-cidades {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-main);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.hist-seta { color: #9ca3af; font-weight: 400; }
+
+.historico-meta {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 4px;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.historico-rota {
+    margin-top: 4px;
+    font-size: 0.72rem;
+    color: #6b7280;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.hist-km { font-weight: 600; color: var(--primary); }
+
+/* Barra de progresso */
+.progresso-barra-wrap {
+    margin-top: 12px;
+    height: 6px;
+    background: #e5e7eb;
+    border-radius: 99px;
+    overflow: hidden;
+}
+.progresso-barra {
+    height: 100%;
+    background: linear-gradient(90deg, #2563eb, #60a5fa);
+    border-radius: 99px;
+    transition: width 0.4s ease;
+}
+.progresso-pct {
+    text-align: right;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    margin-top: 3px;
+    margin-bottom: 10px;
+}
+
+.trecho-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: #f8faff;
+    border: 1px solid #dbeafe;
+    margin-bottom: 12px;
+}
+.trecho-origem { background: #f0fdf4; border-color: #bbf7d0; }
+.trecho-destino { background: #fff1f2; border-color: #fecdd3; }
+
+.trecho-icone { font-size: 1.1rem; flex-shrink: 0; }
+
+.trecho-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+}
+.trecho-label {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.trecho-cidade {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--text-main);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.trecho-km {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--primary);
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.trecho-km-zero { color: var(--text-muted); font-weight: 500; }
+
+@media (max-width: 900px) {
+    body {
+        overflow: auto;
+    }
+
+    #map {
+        height: 60vh;
+    }
+
+    .painel {
+        position: static;
+        width: auto;
+        max-height: none;
+        margin: 16px;
+    }
+
+    .painel-estatisticas {
+        position: static;
+        transform: none;
+        margin: 0 16px 16px;
+        border-radius: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
