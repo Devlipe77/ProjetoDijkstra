@@ -42,7 +42,7 @@ body { margin: 0; padding: 0; font-family: 'Inter', system-ui, sans-serif; backg
     box-shadow: 0 10px 25px rgba(0,0,0,0.3); 
     border: 1px solid rgba(255, 255, 255, 0.1); 
     color: white;
-    display: flex; 
+    display: flex;
     align-items: center; 
     gap: 24px;
 }
@@ -258,54 +258,155 @@ select:disabled { background-color: var(--disabled-bg); cursor: not-allowed; col
 .trecho-km-zero { color: var(--text-muted); font-weight: 500; }
 
 @media (max-width: 900px) {
-    /* 1. Mover o Zoom do Leaflet para não conflitar com o seu botão i+ */
+    body {
+        overflow: hidden;
+        overscroll-behavior-y: none;
+    }
+
+    #map {
+        height: 100dvh !important;
+        width: 100vw !important;
+    }
+
+    /* Move os controles de Zoom do mapa para baixo do botão i+ */
     .leaflet-top.leaflet-left {
-        top: 80px !important; /* Empurra o +/- do mapa para baixo */
+        top: 80px !important;
     }
 
-    /* 2. Ajuste do Botão i+ (Sempre no topo de tudo) */
+    /* Botão flutuante i+ */
     .fab-info {
-        position: absolute;
-        top: 20px;
-        left: 20px;
-        z-index: 2000; /* Valor bem alto para ficar acima de tudo */
-        width: 48px;
-        height: 48px;
-        background: var(--primary);
-        color: white;
-        border-radius: 50%;
-        border: none;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-        font-size: 1.2rem;
-        font-weight: bold;
+        position: absolute !important;
+        top: 16px !important;
+        left: 16px !important;
+        z-index: 2000 !important;
+        width: 48px !important;
+        height: 48px !important;
+        border-radius: 50% !important;
+        background: var(--primary) !important;
+        color: white !important;
+        border: none !important;
+        font-weight: bold !important;
+        font-size: 1.2rem !important;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3) !important;
+        cursor: pointer !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
     }
 
-    /* 3. Painel de Estatísticas (Modal suspenso) */
+    /* Painel de Estatísticas Flutuante (Preparado para animar) */
     .painel-estatisticas {
-        display: none; 
-        position: absolute;
-        top: 85px; /* Começa abaixo do botão i+ */
-        left: 50%;
-        transform: translateX(-50%);
-        width: 90%;
-        max-width: 350px;
-        background: rgba(17, 24, 39, 0.95); /* Mais opaco para leitura melhor */
-        z-index: 1500; /* Abaixo do i+, mas acima do menu inferior */
-        padding: 15px;
-        border-radius: 16px;
-        flex-direction: column;
+        /* Removemos o display: none e colocamos visibilidade e opacidade zeradas */
+        visibility: hidden !important; 
+        opacity: 0 !important;
+        
+        position: absolute !important;
+        top: 80px !important;
+        bottom: auto !important;
+        left: 50% !important;
+        
+        /* Posição inicial: levemente deslocado para cima (-20px) para dar o efeito de queda */
+        transform: translate(-50%, -20px) !important; 
+        
+        width: 90% !important;
+        max-width: 350px !important;
+        background: rgba(17, 24, 39, 0.95) !important;
+        z-index: 1500 !important;
+        padding: 16px !important;
+        border-radius: 16px !important;
+        display: flex !important; /* Mantém o flex ativo, mas invisível */
+        flex-direction: column !important;
+        box-sizing: border-box !important;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.4) !important;
+        
+        /* Configura a suavidade da animação (duração de 0.4s) */
+        transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), visibility 0.4s !important;
     }
 
-    /* Tornar o grid de estatísticas mais "magro" para não esticar muito verticalmente */
+    /* Nova classe que o JS vai adicionar para mostrar o painel com efeito "Bounce" */
+    .painel-estatisticas.mostrar-stats {
+        visibility: visible !important;
+        opacity: 1 !important;
+        transform: translate(-50%, 0) !important; /* Volta para a posição original */
+    }
+    .stats-titulo {
+        width: 100% !important;
+        text-align: center !important;
+        border-right: none !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+        padding-right: 0 !important;
+        padding-bottom: 8px !important;
+        margin-bottom: 12px !important;
+    }
+
     .stats-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 10px;
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 12px !important;
+        width: 100% !important;
     }
 
-    /* 4. Menu Inferior (Bottom Sheet) */
+    /* Bottom Sheet (Menu de Rotas) */
     .painel {
-        z-index: 1000; /* Camada base */
-        /* ... manter as outras configurações de transform e border-radius ... */
+        position: absolute !important;
+        top: auto !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100vw !important;
+        max-height: 70dvh !important;
+        margin: 0 !important;
+        padding: 0 !important; /* O padding agora vai para os filhos */
+        box-sizing: border-box !important;
+        border-radius: 24px 24px 0 0 !important;
+        z-index: 1000 !important;
+        background: rgba(255, 255, 255, 0.95) !important;
+        
+        /* Sistema de Gaveta (Oculta 100% da altura e volta 70px para mostrar o cabeçalho) */
+        transform: translateY(calc(100% - 70px)) !important;
+        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        
+        /* Bloqueia rolagem interna quando a gaveta está fechada */
+        overflow-y: hidden !important; 
+    }
+
+    /* Classe ativada pelo JS para expandir o menu */
+    .painel.expandido {
+        transform: translateY(0) !important;
+        overflow-y: auto !important; /* Libera rolagem quando aberto */
+    }
+
+    /* Estilo do Header Fixo */
+    .painel-header {
+        padding: 16px 20px 8px 20px !important;
+        background: white;
+        border-bottom: 1px solid var(--border-color);
+        flex-shrink: 0; /* Impede que o header suma ao rolar */
+        cursor: pointer;
+        border-radius: 24px 24px 0 0;
+    }
+
+    /* Estilo da Área Rolável */
+    .painel-conteudo {
+        padding: 16px 20px 40px 20px !important;
+        overflow-y: auto !important; /* Rolagem apenas aqui */
+        flex: 1; /* Ocupa todo o espaço disponível abaixo do header */
+        -webkit-overflow-scrolling: touch; /* Melhora a rolagem no iOS */
+    }
+
+    /* Elementos visuais da Alça */
+    .drawer-handle {
+        width: 40px;
+        height: 5px;
+        background: #d1d5db;
+        border-radius: 10px;
+        margin: 0 auto 12px auto;
+        cursor: pointer;
+    }
+
+    .painel h3 {
+        margin-top: 0 !important;
+        margin-bottom: 16px !important;
+        cursor: pointer;
     }
 }

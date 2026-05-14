@@ -183,20 +183,20 @@ async function carregarProjeto() {
     }
 }
 
+// Alterna a exibição das estatísticas com animação
 function toggleStats() {
     const stats = document.getElementById('painel-stats');
     const painelPrincipal = document.getElementById('painel-principal');
     
-    const isHidden = stats.style.display === 'none' || stats.style.display === '';
+    // Alterna a classe que engatilha a animação no CSS
+    stats.classList.toggle('mostrar-stats');
     
-    if (isHidden) {
-        stats.style.display = 'flex';
-        // Opcional: Contrai o menu de rotas para dar foco às estatísticas
-        if (window.innerWidth <= 900) {
-            painelPrincipal.classList.remove('expandido');
-        }
-    } else {
-        stats.style.display = 'none';
+    // Verifica se o painel de stats acabou de ser aberto
+    const isOpen = stats.classList.contains('mostrar-stats');
+    
+    if (isOpen && window.innerWidth <= 900 && painelPrincipal) {
+        // Se abrir as estatísticas, garante que o menu de rotas feche
+        painelPrincipal.classList.remove('expandido');
     }
 }
 
